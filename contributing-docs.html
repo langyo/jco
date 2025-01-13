@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Example - jco</title>
+        <title>Contributing to Docs - jco</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="transpiling.html"><strong aria-hidden="true">2.</strong> Transpiling</a></li><li class="chapter-item expanded "><a href="example.html" class="active"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="#.html"><strong aria-hidden="true">4.</strong> Advanced</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="optimized-host-bindings.html"><strong aria-hidden="true">4.1.</strong> Optimized Host Bindings</a></li></ol></li><li class="chapter-item expanded "><a href="#.html"><strong aria-hidden="true">5.</strong> Contributor Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">5.1.</strong> Contributing to the Codebase</a></li><li class="chapter-item expanded "><a href="contributing-docs.html"><strong aria-hidden="true">5.2.</strong> Contributing to Docs</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="transpiling.html"><strong aria-hidden="true">2.</strong> Transpiling</a></li><li class="chapter-item expanded "><a href="example.html"><strong aria-hidden="true">3.</strong> Example</a></li><li class="chapter-item expanded "><a href="#.html"><strong aria-hidden="true">4.</strong> Advanced</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="optimized-host-bindings.html"><strong aria-hidden="true">4.1.</strong> Optimized Host Bindings</a></li></ol></li><li class="chapter-item expanded "><a href="#.html"><strong aria-hidden="true">5.</strong> Contributor Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">5.1.</strong> Contributing to the Codebase</a></li><li class="chapter-item expanded "><a href="contributing-docs.html" class="active"><strong aria-hidden="true">5.2.</strong> Contributing to Docs</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,153 +144,35 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="jco-example-workflow"><a class="header" href="#jco-example-workflow">Jco Example Workflow</a></h2>
-<p>Given an existing Wasm Component, <code>jco</code> provides the tooling necessary to work with this Component fully natively in JS.</p>
-<p>Jco also provides an experimental feature for generating components from JavaScript by wrapping <a href="https://github.com/bytecodealliance/ComponentizeJS">ComponentizeJS</a> in the <code>jco componentize</code> command.</p>
-<p>To demonstrate a full end-to-end component, we can create a JavaScript component embedding Spidermnokey then run it in JavaScript.</p>
-<h3 id="installing-jco"><a class="header" href="#installing-jco">Installing Jco</a></h3>
-<p>Either install Jco globally:</p>
-<pre><code class="language-shell">$ npm install -g @bytecodealliance/jco
-$ jco --version
-1.0.3
+                        <p><code>jco</code> is a <a href="https://bytecodealliance.org/">Bytecode Alliance</a> project and follows the Bytecode Alliance's <a href="https://raw.githubusercontent.com/bytecodealliance/jco/main/CODE_OF_CONDUCT.md">Code of Conduct</a> and <a href="https://raw.githubusercontent.com/bytecodealliance/jco/main/ORG_CODE_OF_CONDUCT.md">Organizational Code of Conduct</a>.</p>
+<h2 id="using-this-repository"><a class="header" href="#using-this-repository">Using this repository</a></h2>
+<p>You can run the website locally using the <a href="https://rust-lang.github.io/mdBook/index.html">mdBook</a> command line tool.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<p>To use this repository, you need <a href="https://rust-lang.github.io/mdBook/guide/installation.html">mdBook</a> installed on your workstation.</p>
+<h2 id="running-the-website-locally"><a class="header" href="#running-the-website-locally">Running the website locally</a></h2>
+<p>After installing mdBook, on GitHub, click the <code>Fork</code> button in the upper-right area of the screen to create a copy of the jco repository in your account. This copy is called a fork.</p>
+<p>Next, clone it locally by executing the command below.</p>
+<pre><code class="language-shell">git clone https://github.com/bytecodealliance/jco/
+cd docs
 </code></pre>
-<p>Or install it locally and use <code>npx</code> to run it:</p>
-<pre><code class="language-shell">$ npm install @bytecodealliance/jco
-$ npx jco --version
-1.0.3
+<p>To build and test the site locally, run:</p>
+<pre><code class="language-shell">mdbook serve --open
 </code></pre>
-<p>Local usage can be preferable to ensure the project is reproducible and self-contained, but requires
-replacing all <code>jco</code> shell calls in the following example with either <code>./node_modules/.bin/jco</code> or <code>npx jco</code>.</p>
-<h3 id="installing-componentizejs"><a class="header" href="#installing-componentizejs">Installing ComponentizeJS</a></h3>
-<p>To use ComponentizeJS, it must be separately installed, globally or locally depending on whether Jco was installed globally or locally. Globally:</p>
-<pre><code class="language-shell">$ npm install -g @bytecodealliance/componentize-js
-</code></pre>
-<p>Or locally:</p>
-<pre><code class="language-shell">$ npm install @bytecodealliance/componentize-js
-</code></pre>
-<p>Now the <code>jco componentize</code> command will be ready to use.</p>
-<h3 id="creating-a-component-with-componentizejs"><a class="header" href="#creating-a-component-with-componentizejs">Creating a Component with ComponentizeJS</a></h3>
-<p>This Cowsay component uses the following WIT file (<a href="https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md">WIT</a> is the typing language used for defining Components):</p>
-<p>cowsay.wit</p>
-<pre><code class="language-wit">package local:cowsay;
-world cowsay {
-  export cow: interface {
-    enum cows {
-      default,
-      owl
-    }
-    say: func(text: string, cow: option&lt;cows&gt;) -&gt; string;
-  }
-}
-</code></pre>
-<p>We can implement this with the following JS:</p>
-<p>cowsay.js</p>
-<pre><code class="language-js">export const cow = {
-  say (text, cow = 'default') {
-    switch (cow) {
-      case 'default':
-return `${text}
-  \\   ^__^
-    \\  (oo)\\______
-      (__)\\      )\/\\
-          ||----w |
-          ||     ||
-`;
-      case 'owl':
-return `${text}
-   ___
-  (o o)
- (  V  )
-/--m-m-
-`;
-    }
-  }
-};
-</code></pre>
-<p>To turn this into a component run:</p>
-<pre><code class="language-shell">$ jco componentize cowsay.js --wit cowsay.wit -o cowsay.wasm
-
-OK Successfully written cowsay.wasm with imports ().
-</code></pre>
-<h3 id="inspecting-component-wit"><a class="header" href="#inspecting-component-wit">Inspecting Component WIT</a></h3>
-<p>As a first step, we might like to look instead this binary black box of a Component and see what it actually does.</p>
-<pre><code class="language-shell">$ jco wit cowsay.wasm
-package root:component;
-
-world root {
-  export cow: interface {
-    enum cows {
-      default,
-      owl,
-    }
-
-    say: func(text: string, cow: option&lt;cows&gt;) -&gt; string;
-  }
-}
-</code></pre>
-<h3 id="transpiling-to-js"><a class="header" href="#transpiling-to-js">Transpiling to JS</a></h3>
-<p>To execute the Component in a JS environment, use the <code>jco transpile</code> command to generate the JS for the Component:</p>
-<pre><code class="language-shell">$ jco transpile cowsay.wasm -o cowsay
-
-Transpiled JS Component Files:
-
- - cowsay/cowsay.core.wasm     7.61 MiB
- - cowsay/cowsay.d.ts          0.07 KiB
- - cowsay/cowsay.js            2.62 KiB
- - cowsay/interfaces/cow.d.ts  0.21 KiB
-</code></pre>
-<p>Now the Component can be directly imported and used as an ES module:</p>
-<p>test.js</p>
-<pre><code class="language-js">import { cow } from './cowsay/cowsay.js';
-
-console.log(cow.say('Hello Wasm Components!'));
-</code></pre>
-<p>For Node.js to allow us to run native ES modules, we must first create or edit the local <code>package.json</code> file to include a <code>&quot;type&quot;: &quot;module&quot;</code> field:</p>
-<p>package.json</p>
-<pre><code class="language-json">{
-  &quot;type&quot;: &quot;module&quot;
-}
-</code></pre>
-<p>The above JavaScript can now be executed in Node.js:</p>
-<pre><code class="language-shell">$ node test.js
-
- Hello Wasm Components!
-  \   ^__^
-    \  (oo)\______
-      (__)\      )/\
-          ||----w |
-          ||     ||
-</code></pre>
-<p>Passing in the optional second parameter, we can change the cow:</p>
-<p>test.js</p>
-<pre><code class="language-js">import { cow } from './cowsay/cowsay.js';
-
-console.log(cow.say('Hello Wasm Components!', 'owl'));
-</code></pre>
-<pre><code class="language-shell">$ node test.js
-
- Hello Wasm Components!
-   ___
-  (o o)
- (  V  )
-/--m-m-
-</code></pre>
-<p>It can also be executed in a browser via a module script:</p>
-<pre><code class="language-html">&lt;script type=&quot;module&quot; src=&quot;test.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<p>There are a number of custom transpilation options available, detailed in the <a href="README.html#API">API section</a>.</p>
+<h2 id="submitting-changes"><a class="header" href="#submitting-changes">Submitting Changes</a></h2>
+<ul>
+<li>Follow the instructions above to <a href="./contributing-docs.html#running-the-website-locally">make changes to your website locally</a>.</li>
+<li>When you are ready to submit those changes, go to your fork and create a new pull request to let us know about it.</li>
+</ul>
+<p>Everyone is welcome to submit a pull request! Once your pull request is created, we'll try to get to reviewing it or responding to it in at most a few days. As the owner of the pull request, it is your responsibility to modify your pull request to address the feedback that has been provided to you by the reviewer.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="transpiling.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="contributing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="#.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -298,13 +180,10 @@ console.log(cow.say('Hello Wasm Components!', 'owl'));
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="transpiling.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="contributing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="#.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
