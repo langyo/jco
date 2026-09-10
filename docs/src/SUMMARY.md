@@ -58,6 +58,7 @@
             - [`node:vm`](./interop/nodejs-builtins/supported-modules/vm.md)
             - [`node:worker_threads`](./interop/nodejs-builtins/supported-modules/worker-threads.md)
             - [`node:zlib`](./interop/nodejs-builtins/supported-modules/zlib.md)
+    - [Express](./interop/express.md)
 - [Troubleshooting]()
     - [Common issues](./troubleshooting/common-issues.md)
 - [Contributor Guide]()
